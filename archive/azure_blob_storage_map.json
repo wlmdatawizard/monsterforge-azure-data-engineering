@@ -1,0 +1,2100 @@
+{
+    "BlobServiceClient": {
+        "object": {
+            "type": "BlobServiceClient",
+            "module": "azure.storage.blob._blob_service_client",
+            "class_name": "BlobServiceClient"
+        },
+        "methods": [
+            {
+                "name": "close",
+                "is_private": false,
+                "signature": "() -> None",
+                "parameters": [],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "create_container",
+                "is_private": false,
+                "signature": "(name: str, metadata: Optional[Dict[str, str]] = None, public_access: Union[ForwardRef('PublicAccess'), str, NoneType] = None, **kwargs: Any) -> azure.storage.blob._container_client.ContainerClient",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "public_access",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[ForwardRef('PublicAccess'), str, NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._container_client.ContainerClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_container",
+                "is_private": false,
+                "signature": "(container: Union[azure.storage.blob._models.ContainerProperties, str], lease: Union[ForwardRef('BlobLeaseClient'), str, NoneType] = None, **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "container",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[azure.storage.blob._models.ContainerProperties, str]",
+                        "default": null
+                    },
+                    {
+                        "name": "lease",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[ForwardRef('BlobLeaseClient'), str, NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "find_blobs_by_tags",
+                "is_private": false,
+                "signature": "(filter_expression: str, **kwargs: Any) -> azure.core.paging.ItemPaged['FilteredBlob']",
+                "parameters": [
+                    {
+                        "name": "filter_expression",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged['FilteredBlob']",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "from_connection_string",
+                "is_private": false,
+                "signature": "(conn_str: str, credential: Union[str, Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType] = None, **kwargs: Any) -> Self",
+                "parameters": [
+                    {
+                        "name": "conn_str",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "credential",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Self",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_account_information",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, str]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_blob_client",
+                "is_private": false,
+                "signature": "(container: Union[azure.storage.blob._models.ContainerProperties, str], blob: str, snapshot: Union[str, Dict[str, Any], NoneType] = None, *, version_id: Optional[str] = None) -> azure.storage.blob._blob_client.BlobClient",
+                "parameters": [
+                    {
+                        "name": "container",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[azure.storage.blob._models.ContainerProperties, str]",
+                        "default": null
+                    },
+                    {
+                        "name": "blob",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "snapshot",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "version_id",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._blob_client.BlobClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_container_client",
+                "is_private": false,
+                "signature": "(container: Union[azure.storage.blob._models.ContainerProperties, str]) -> azure.storage.blob._container_client.ContainerClient",
+                "parameters": [
+                    {
+                        "name": "container",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[azure.storage.blob._models.ContainerProperties, str]",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._container_client.ContainerClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_service_properties",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_service_stats",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_user_delegation_key",
+                "is_private": false,
+                "signature": "(key_start_time: 'datetime', key_expiry_time: 'datetime', *, delegated_user_tid: Optional[str] = None, **kwargs: Any) -> 'UserDelegationKey'",
+                "parameters": [
+                    {
+                        "name": "key_start_time",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "datetime",
+                        "default": null
+                    },
+                    {
+                        "name": "key_expiry_time",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "datetime",
+                        "default": null
+                    },
+                    {
+                        "name": "delegated_user_tid",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "UserDelegationKey",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "list_containers",
+                "is_private": false,
+                "signature": "(name_starts_with: Optional[str] = None, include_metadata: bool = False, **kwargs: Any) -> azure.core.paging.ItemPaged[azure.storage.blob._models.ContainerProperties]",
+                "parameters": [
+                    {
+                        "name": "name_starts_with",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "include_metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'bool'>",
+                        "default": "False"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[azure.storage.blob._models.ContainerProperties]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_service_properties",
+                "is_private": false,
+                "signature": "(analytics_logging: Optional[ForwardRef('BlobAnalyticsLogging')] = None, hour_metrics: Optional[ForwardRef('Metrics')] = None, minute_metrics: Optional[ForwardRef('Metrics')] = None, cors: Optional[List[azure.storage.blob._models.CorsRule]] = None, target_version: Optional[str] = None, delete_retention_policy: Optional[ForwardRef('RetentionPolicy')] = None, static_website: Optional[ForwardRef('StaticWebsite')] = None, **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "analytics_logging",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('BlobAnalyticsLogging')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "hour_metrics",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('Metrics')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "minute_metrics",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('Metrics')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "cors",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.List[azure.storage.blob._models.CorsRule]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "target_version",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "delete_retention_policy",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('RetentionPolicy')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "static_website",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('StaticWebsite')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "undelete_container",
+                "is_private": false,
+                "signature": "(deleted_container_name: str, deleted_container_version: str, **kwargs: Any) -> azure.storage.blob._container_client.ContainerClient",
+                "parameters": [
+                    {
+                        "name": "deleted_container_name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "deleted_container_version",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._container_client.ContainerClient'>",
+                "docstring": null,
+                "error": null
+            }
+        ]
+    },
+    "ContainerClient": {
+        "object": {
+            "type": "ContainerClient",
+            "module": "azure.storage.blob._container_client",
+            "class_name": "ContainerClient"
+        },
+        "methods": [
+            {
+                "name": "acquire_lease",
+                "is_private": false,
+                "signature": "(lease_duration: int = -1, lease_id: Optional[str] = None, **kwargs: Any) -> azure.storage.blob._lease.BlobLeaseClient",
+                "parameters": [
+                    {
+                        "name": "lease_duration",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": "-1"
+                    },
+                    {
+                        "name": "lease_id",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._lease.BlobLeaseClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "close",
+                "is_private": false,
+                "signature": "() -> None",
+                "parameters": [],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "create_container",
+                "is_private": false,
+                "signature": "(metadata: Optional[Dict[str, str]] = None, public_access: Union[ForwardRef('PublicAccess'), str, NoneType] = None, **kwargs: Any) -> Dict[str, Union[str, ForwardRef('datetime')]]",
+                "parameters": [
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "public_access",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[ForwardRef('PublicAccess'), str, NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, ForwardRef('datetime')]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_blob",
+                "is_private": false,
+                "signature": "(blob: str, delete_snapshots: Optional[str] = None, **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "blob",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "delete_snapshots",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_blobs",
+                "is_private": false,
+                "signature": "(*blobs: Union[str, Dict[str, Any], azure.storage.blob._models.BlobProperties], **kwargs: Any) -> Iterator[ForwardRef('HttpResponse')]",
+                "parameters": [
+                    {
+                        "name": "blobs",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], azure.storage.blob._models.BlobProperties]",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Iterator[ForwardRef('HttpResponse')]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_container",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "download_blob",
+                "is_private": false,
+                "signature": "(blob: str, offset: Optional[int] = None, length: Optional[int] = None, *, encoding: Optional[str] = None, **kwargs: Any) -> Union[azure.storage.blob._download.StorageStreamDownloader[str], azure.storage.blob._download.StorageStreamDownloader[bytes]]",
+                "parameters": [
+                    {
+                        "name": "blob",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "encoding",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Union[azure.storage.blob._download.StorageStreamDownloader[str], azure.storage.blob._download.StorageStreamDownloader[bytes]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "exists",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> bool",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'bool'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "find_blobs_by_tags",
+                "is_private": false,
+                "signature": "(filter_expression: str, **kwargs: Any) -> azure.core.paging.ItemPaged[azure.storage.blob._models.FilteredBlob]",
+                "parameters": [
+                    {
+                        "name": "filter_expression",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[azure.storage.blob._models.FilteredBlob]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "from_connection_string",
+                "is_private": false,
+                "signature": "(conn_str: str, container_name: str, credential: Union[str, Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType] = None, **kwargs: Any) -> Self",
+                "parameters": [
+                    {
+                        "name": "conn_str",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "container_name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "credential",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Self",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "from_container_url",
+                "is_private": false,
+                "signature": "(container_url: str, credential: Union[str, Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType] = None, **kwargs: Any) -> Self",
+                "parameters": [
+                    {
+                        "name": "container_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "credential",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Self",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_account_information",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, str]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_blob_client",
+                "is_private": false,
+                "signature": "(blob: str, snapshot: Optional[str] = None, *, version_id: Optional[str] = None) -> azure.storage.blob._blob_client.BlobClient",
+                "parameters": [
+                    {
+                        "name": "blob",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "snapshot",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "version_id",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._blob_client.BlobClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_container_access_policy",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_container_properties",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> azure.storage.blob._models.ContainerProperties",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._models.ContainerProperties'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "list_blob_names",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> azure.core.paging.ItemPaged[str]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "list_blobs",
+                "is_private": false,
+                "signature": "(name_starts_with: Optional[str] = None, include: Union[str, List[str], NoneType] = None, **kwargs: Any) -> azure.core.paging.ItemPaged[azure.storage.blob._models.BlobProperties]",
+                "parameters": [
+                    {
+                        "name": "name_starts_with",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "include",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.List[str], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[azure.storage.blob._models.BlobProperties]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_container_access_policy",
+                "is_private": false,
+                "signature": "(signed_identifiers: Dict[str, ForwardRef('AccessPolicy')], public_access: Union[ForwardRef('PublicAccess'), str, NoneType] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "signed_identifiers",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Dict[str, ForwardRef('AccessPolicy')]",
+                        "default": null
+                    },
+                    {
+                        "name": "public_access",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[ForwardRef('PublicAccess'), str, NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_container_metadata",
+                "is_private": false,
+                "signature": "(metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Union[str, ForwardRef('datetime')]]",
+                "parameters": [
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, ForwardRef('datetime')]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_premium_page_blob_tier_blobs",
+                "is_private": false,
+                "signature": "(premium_page_blob_tier: Union[str, ForwardRef('PremiumPageBlobTier'), NoneType], *blobs: Union[str, Dict[str, Any], azure.storage.blob._models.BlobProperties], **kwargs: Any) -> Iterator[ForwardRef('HttpResponse')]",
+                "parameters": [
+                    {
+                        "name": "premium_page_blob_tier",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, ForwardRef('PremiumPageBlobTier'), NoneType]",
+                        "default": null
+                    },
+                    {
+                        "name": "blobs",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], azure.storage.blob._models.BlobProperties]",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Iterator[ForwardRef('HttpResponse')]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_standard_blob_tier_blobs",
+                "is_private": false,
+                "signature": "(standard_blob_tier: Union[str, ForwardRef('StandardBlobTier'), NoneType], *blobs: Union[str, Dict[str, Any], azure.storage.blob._models.BlobProperties], **kwargs: Any) -> Iterator[ForwardRef('HttpResponse')]",
+                "parameters": [
+                    {
+                        "name": "standard_blob_tier",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, ForwardRef('StandardBlobTier'), NoneType]",
+                        "default": null
+                    },
+                    {
+                        "name": "blobs",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], azure.storage.blob._models.BlobProperties]",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Iterator[ForwardRef('HttpResponse')]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "upload_blob",
+                "is_private": false,
+                "signature": "(name: str, data: Union[bytes, str, Iterable[~AnyStr], IO[~AnyStr]], blob_type: Union[str, azure.storage.blob._models.BlobType] = <BlobType.BLOCKBLOB: 'BlockBlob'>, length: Optional[int] = None, metadata: Optional[Dict[str, str]] = None, **kwargs) -> azure.storage.blob._blob_client.BlobClient",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "data",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[bytes, str, typing.Iterable[~AnyStr], typing.IO[~AnyStr]]",
+                        "default": null
+                    },
+                    {
+                        "name": "blob_type",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, azure.storage.blob._models.BlobType]",
+                        "default": "<BlobType.BLOCKBLOB: 'BlockBlob'>"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._blob_client.BlobClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "walk_blobs",
+                "is_private": false,
+                "signature": "(name_starts_with: Optional[str] = None, include: Union[str, List[str], NoneType] = None, delimiter: str = '/', **kwargs: Any) -> azure.core.paging.ItemPaged[typing.Union[azure.storage.blob._models.BlobProperties, azure.storage.blob._list_blobs_helper.BlobPrefix]]",
+                "parameters": [
+                    {
+                        "name": "name_starts_with",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "include",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.List[str], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "delimiter",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": "'/'"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[typing.Union[azure.storage.blob._models.BlobProperties, azure.storage.blob._list_blobs_helper.BlobPrefix]]",
+                "docstring": null,
+                "error": null
+            }
+        ]
+    },
+    "BlobClient": {
+        "object": {
+            "type": "BlobClient",
+            "module": "azure.storage.blob._blob_client",
+            "class_name": "BlobClient"
+        },
+        "methods": [
+            {
+                "name": "abort_copy",
+                "is_private": false,
+                "signature": "(copy_id: Union[str, Dict[str, Any], azure.storage.blob._models.BlobProperties], **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "copy_id",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], azure.storage.blob._models.BlobProperties]",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "acquire_lease",
+                "is_private": false,
+                "signature": "(lease_duration: int = -1, lease_id: Optional[str] = None, **kwargs: Any) -> azure.storage.blob._lease.BlobLeaseClient",
+                "parameters": [
+                    {
+                        "name": "lease_duration",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": "-1"
+                    },
+                    {
+                        "name": "lease_id",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._lease.BlobLeaseClient'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "append_block",
+                "is_private": false,
+                "signature": "(data: Union[bytes, Iterable[bytes], IO[bytes]], length: Optional[int] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime, int]]",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[bytes, typing.Iterable[bytes], typing.IO[bytes]]",
+                        "default": null
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime, int]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "append_block_from_url",
+                "is_private": false,
+                "signature": "(copy_source_url: str, source_offset: Optional[int] = None, source_length: Optional[int] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime, int]]",
+                "parameters": [
+                    {
+                        "name": "copy_source_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "source_offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "source_length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime, int]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "clear_page",
+                "is_private": false,
+                "signature": "(offset: int, length: int, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "close",
+                "is_private": false,
+                "signature": "() -> None",
+                "parameters": [],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "commit_block_list",
+                "is_private": false,
+                "signature": "(block_list: List[azure.storage.blob._models.BlobBlock], content_settings: Optional[ForwardRef('ContentSettings')] = None, metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "block_list",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.List[azure.storage.blob._models.BlobBlock]",
+                        "default": null
+                    },
+                    {
+                        "name": "content_settings",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('ContentSettings')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "create_append_blob",
+                "is_private": false,
+                "signature": "(content_settings: Optional[ForwardRef('ContentSettings')] = None, metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "content_settings",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('ContentSettings')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "create_page_blob",
+                "is_private": false,
+                "signature": "(size: int, content_settings: Optional[ForwardRef('ContentSettings')] = None, metadata: Optional[Dict[str, str]] = None, premium_page_blob_tier: Union[str, ForwardRef('PremiumPageBlobTier'), NoneType] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "content_settings",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('ContentSettings')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "premium_page_blob_tier",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, ForwardRef('PremiumPageBlobTier'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "create_snapshot",
+                "is_private": false,
+                "signature": "(metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_blob",
+                "is_private": false,
+                "signature": "(delete_snapshots: Optional[str] = None, **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "delete_snapshots",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "delete_immutability_policy",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "download_blob",
+                "is_private": false,
+                "signature": "(offset: Optional[int] = None, length: Optional[int] = None, *, encoding: Optional[str] = None, **kwargs: Any) -> Union[azure.storage.blob._download.StorageStreamDownloader[str], azure.storage.blob._download.StorageStreamDownloader[bytes]]",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "encoding",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Union[azure.storage.blob._download.StorageStreamDownloader[str], azure.storage.blob._download.StorageStreamDownloader[bytes]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "exists",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> bool",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'bool'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "from_blob_url",
+                "is_private": false,
+                "signature": "(blob_url: str, credential: Union[str, Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType] = None, snapshot: Union[str, Dict[str, Any], NoneType] = None, **kwargs: Any) -> Self",
+                "parameters": [
+                    {
+                        "name": "blob_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "credential",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "snapshot",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Self",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "from_connection_string",
+                "is_private": false,
+                "signature": "(conn_str: str, container_name: str, blob_name: str, snapshot: Union[str, Dict[str, Any], NoneType] = None, credential: Union[str, Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType] = None, **kwargs: Any) -> Self",
+                "parameters": [
+                    {
+                        "name": "conn_str",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "container_name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "blob_name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "snapshot",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "credential",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, str], ForwardRef('AzureNamedKeyCredential'), ForwardRef('AzureSasCredential'), ForwardRef('TokenCredential'), NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Self",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_account_information",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, str]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_blob_properties",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> azure.storage.blob._models.BlobProperties",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._models.BlobProperties'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_blob_tags",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, str]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_block_list",
+                "is_private": false,
+                "signature": "(block_list_type: str = 'committed', **kwargs: Any) -> Tuple[List[azure.storage.blob._models.BlobBlock], List[azure.storage.blob._models.BlobBlock]]",
+                "parameters": [
+                    {
+                        "name": "block_list_type",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": "'committed'"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Tuple[typing.List[azure.storage.blob._models.BlobBlock], typing.List[azure.storage.blob._models.BlobBlock]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_page_range_diff_for_managed_disk",
+                "is_private": false,
+                "signature": "(previous_snapshot_url: str, offset: Optional[int] = None, length: Optional[int] = None, **kwargs: Any) -> Tuple[List[Dict[str, int]], List[Dict[str, int]]]",
+                "parameters": [
+                    {
+                        "name": "previous_snapshot_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Tuple[typing.List[typing.Dict[str, int]], typing.List[typing.Dict[str, int]]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "get_page_ranges",
+                "is_private": false,
+                "signature": "(offset: Optional[int] = None, length: Optional[int] = None, previous_snapshot_diff: Union[str, Dict[str, Any], NoneType] = None, **kwargs: Any) -> Tuple[List[Dict[str, int]], List[Dict[str, int]]]",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "previous_snapshot_diff",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Tuple[typing.List[typing.Dict[str, int]], typing.List[typing.Dict[str, int]]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "list_page_ranges",
+                "is_private": false,
+                "signature": "(*, offset: Optional[int] = None, length: Optional[int] = None, previous_snapshot: Union[str, Dict[str, Any], NoneType] = None, **kwargs: Any) -> azure.core.paging.ItemPaged[azure.storage.blob._models.PageRange]",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "previous_snapshot",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Union[str, typing.Dict[str, typing.Any], NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "azure.core.paging.ItemPaged[azure.storage.blob._models.PageRange]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "query_blob",
+                "is_private": false,
+                "signature": "(query_expression: str, **kwargs: Any) -> azure.storage.blob._quick_query_helper.BlobQueryReader",
+                "parameters": [
+                    {
+                        "name": "query_expression",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "<class 'azure.storage.blob._quick_query_helper.BlobQueryReader'>",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "resize_blob",
+                "is_private": false,
+                "signature": "(size: int, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "seal_append_blob",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> Dict[str, Union[str, datetime.datetime, int]]",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime, int]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_blob_metadata",
+                "is_private": false,
+                "signature": "(metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_blob_tags",
+                "is_private": false,
+                "signature": "(tags: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "tags",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_http_headers",
+                "is_private": false,
+                "signature": "(content_settings: Optional[ForwardRef('ContentSettings')] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "content_settings",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[ForwardRef('ContentSettings')]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_immutability_policy",
+                "is_private": false,
+                "signature": "(immutability_policy: 'ImmutabilityPolicy', **kwargs: Any) -> Dict[str, str]",
+                "parameters": [
+                    {
+                        "name": "immutability_policy",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "ImmutabilityPolicy",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, str]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_legal_hold",
+                "is_private": false,
+                "signature": "(legal_hold: bool, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime, bool]]",
+                "parameters": [
+                    {
+                        "name": "legal_hold",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'bool'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime, bool]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_premium_page_blob_tier",
+                "is_private": false,
+                "signature": "(premium_page_blob_tier: 'PremiumPageBlobTier', **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "premium_page_blob_tier",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "PremiumPageBlobTier",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_sequence_number",
+                "is_private": false,
+                "signature": "(sequence_number_action: Union[str, ForwardRef('SequenceNumberAction')], sequence_number: Optional[str] = None, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "sequence_number_action",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, ForwardRef('SequenceNumberAction')]",
+                        "default": null
+                    },
+                    {
+                        "name": "sequence_number",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[str]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "set_standard_blob_tier",
+                "is_private": false,
+                "signature": "(standard_blob_tier: Union[str, ForwardRef('StandardBlobTier')], **kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "standard_blob_tier",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, ForwardRef('StandardBlobTier')]",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "stage_block",
+                "is_private": false,
+                "signature": "(block_id: str, data: Union[bytes, Iterable[bytes], IO[bytes]], length: Optional[int] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "block_id",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "data",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[bytes, typing.Iterable[bytes], typing.IO[bytes]]",
+                        "default": null
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "stage_block_from_url",
+                "is_private": false,
+                "signature": "(block_id: str, source_url: str, source_offset: Optional[int] = None, source_length: Optional[int] = None, source_content_md5: Union[bytes, bytearray, NoneType] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "block_id",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "source_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "source_offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "source_length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "source_content_md5",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[bytes, bytearray, NoneType]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "start_copy_from_url",
+                "is_private": false,
+                "signature": "(source_url: str, metadata: Optional[Dict[str, str]] = None, incremental_copy: bool = False, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "source_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "incremental_copy",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'bool'>",
+                        "default": "False"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "undelete_blob",
+                "is_private": false,
+                "signature": "(**kwargs: Any) -> None",
+                "parameters": [
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "None",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "upload_blob",
+                "is_private": false,
+                "signature": "(data: Union[bytes, str, Iterable[~AnyStr], IO[bytes]], blob_type: Union[str, azure.storage.blob._models.BlobType] = <BlobType.BLOCKBLOB: 'BlockBlob'>, length: Optional[int] = None, metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[bytes, str, typing.Iterable[~AnyStr], typing.IO[bytes]]",
+                        "default": null
+                    },
+                    {
+                        "name": "blob_type",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Union[str, azure.storage.blob._models.BlobType]",
+                        "default": "<BlobType.BLOCKBLOB: 'BlockBlob'>"
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[int]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "upload_blob_from_url",
+                "is_private": false,
+                "signature": "(source_url: str, *, metadata: Optional[Dict[str, str]] = None, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "source_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "metadata",
+                        "kind": "KEYWORD_ONLY",
+                        "annotation": "typing.Optional[typing.Dict[str, str]]",
+                        "default": "None"
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "upload_page",
+                "is_private": false,
+                "signature": "(page: bytes, offset: int, length: int, **kwargs: Any) -> Dict[str, Union[str, datetime.datetime]]",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'bytes'>",
+                        "default": null
+                    },
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Union[str, datetime.datetime]]",
+                "docstring": null,
+                "error": null
+            },
+            {
+                "name": "upload_pages_from_url",
+                "is_private": false,
+                "signature": "(source_url: str, offset: int, length: int, source_offset: int, **kwargs: Any) -> Dict[str, Any]",
+                "parameters": [
+                    {
+                        "name": "source_url",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'str'>",
+                        "default": null
+                    },
+                    {
+                        "name": "offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "length",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "source_offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "<class 'int'>",
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": "typing.Any",
+                        "default": null
+                    }
+                ],
+                "return_annotation": "typing.Dict[str, typing.Any]",
+                "docstring": null,
+                "error": null
+            }
+        ]
+    }
+}
