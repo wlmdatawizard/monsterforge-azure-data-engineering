@@ -977,3 +977,14 @@ def categorize_return_annotation(annotation):
         return "object"
 
     return "object"
+
+
+# Under imports add this: from src.utils.object_explorer import build_object_map
+# Run this to Create the object map and hierarchy for the given objects.
+# build_object_map(
+#         s3,
+#         map_output_path="data/object_explorer/s3_map.json",
+#         hierarchy_output_path="data/object_explorer/s3_hierarchy.json",
+#     )
+# S3 is the object being explored to build the object map and hierarchy.
+# Then you can define the output location for the object map and hierarchy JSON files.

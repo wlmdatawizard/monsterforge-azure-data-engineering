@@ -8,17 +8,19 @@ from src.config.settings import ACCOUNT_URL
 from src.azure.authentication import get_credential
 import inspect
 from src.utils.object_explorer import build_azure_blob_storage_map, build_method_tree, build_object_map, explore, inspect_object, print_object, print_report, print_search_results, run_method_discovery, save_json, search_report, to_hierarchy
+from pathlib import Path
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (col, lit, lower, upper, trim, regexp_replace, when, coalesce, expr, initcap)
 
 
 credential = get_credential()
-run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
-run_key = f"raw/monsters/runs/run_id={run_id}/monsters.csv"
 blob_service: BlobServiceClient = BlobServiceClient(account_url=ACCOUNT_URL, credential=credential, )
 spark = (SparkSession.builder .appName("Azure Pipeline") .master("local[*]") .getOrCreate())
 local_file = "C:\\Users\\willi\\OneDrive\\Desktop\\monsterfroge-azure-data-engineering\\data\\raw\\MonsterForge_monsters_raw_100.csv"
+
 df = spark.read.csv(local_file, header=True, inferSchema=True)
+run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+run_key = f"raw/monsters/runs/run_id={run_id}/monsters.csv"
 
 
 def run_safely(func, *args, default_return=None,
@@ -77,66 +79,66 @@ reports = get_container("reports")
 #     return result
 
 
-def explore1(obj):
-    methods = []
-    properties = []
+# def explore1(obj):
+#     methods = []
+#     properties = []
 
-    for name in sorted(dir(obj)):
-        if name.startswith("_"):
-            continue
+#     for name in sorted(dir(obj)):
+#         if name.startswith("_"):
+#             continue
 
-        try:
-            member = getattr(obj, name)
+#         try:
+#             member = getattr(obj, name)
 
-            if callable(member):
-                try:
-                    signature = str(inspect.signature(member))
-                except (ValueError, TypeError):
-                    signature = "(...)"
+#             if callable(member):
+#                 try:
+#                     signature = str(inspect.signature(member))
+#                 except (ValueError, TypeError):
+#                     signature = "(...)"
 
-                methods.append((name, signature))
+#                 methods.append((name, signature))
 
-            else:
-                properties.append(
-                    (
-                        name,
-                        type(member).__name__,
-                        repr(member)
-                    )
-                )
+#             else:
+#                 properties.append(
+#                     (
+#                         name,
+#                         type(member).__name__,
+#                         repr(member)
+#                     )
+#                 )
 
-        except Exception as e:
-            properties.append(
-                (
-                    name,
-                    "ERROR",
-                    str(e)
-                )
-            )
+#         except Exception as e:
+#             properties.append(
+#                 (
+#                     name,
+#                     "ERROR",
+#                     str(e)
+#                 )
+#             )
 
-    print("=" * 120)
-    print(f"Object Type : {type(obj).__name__}")
-    print("=" * 120)
+#     print("=" * 120)
+#     print(f"Object Type : {type(obj).__name__}")
+#     print("=" * 120)
 
-    print("\nProperties")
-    print("-" * 120)
-    print(f"{'Name':<35} {'Type':<20} Value")
-    print("-" * 120)
+#     print("\nProperties")
+#     print("-" * 120)
+#     print(f"{'Name':<35} {'Type':<20} Value")
+#     print("-" * 120)
 
-    for name, kind, value in properties:
-        print(f"{name:<35} {kind:<20} {value}")
+#     for name, kind, value in properties:
+#         print(f"{name:<35} {kind:<20} {value}")
 
-    print("\nMethods")
-    print("-" * 120)
+#     print("\nMethods")
+#     print("-" * 120)
 
-    for name, signature in methods:
-        print(f"{name:<35}{signature}")
+#     for name, signature in methods:
+#         print(f"{name:<35}{signature}")
 
-    print("\nSummary")
-    print("-" * 120)
-    print(f"Properties : {len(properties)}")
-    print(f"Methods    : {len(methods)}")
-    print("=" * 120)
+#     print("\nSummary")
+#     print("-" * 120)
+#     print(f"Properties : {len(properties)}")
+#     print(f"Methods    : {len(methods)}")
+#     print("=" * 120)
 
 
 def upload_blob(local_file, container_client, blob_path):
@@ -191,8 +193,37 @@ def transform_dataframe(df):
     return quarantine_df, clean_df
 
 
-if __name__ == "__main__":
-    df.show()
+def export_to_local(clean_df, quarantine_df, run_id):
+    output_root = Path.cwd() / "output" / f"run_id={run_id}"
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    clean_local_file = output_root / "monsters_clean.csv"
+    quarantine_local_file = output_root / "monsters_quarantine.csv"
+
+    print(f"\nExporting files to: {output_root}")
+
+    clean_df.toPandas().to_csv(clean_local_file, index=False)
+    quarantine_df.toPandas().to_csv(quarantine_local_file, index=False)
+
+    print("CSV export complete.")
+    print(f"✓ {clean_local_file.name}")
+    print(f"✓ {quarantine_local_file.name}")
+    return clean_local_file, quarantine_local_file
+
+
+def upload_after_transform(clean_local_file, quarantine_local_file, run_id):
+    upload_blob(clean_local_file, clean, "monsters/latest/monsters_clean.csv")
+    upload_blob(clean_local_file, clean, f"monsters/runs/run_id={run_id}/monsters_clean.csv")
+
+    upload_blob(quarantine_local_file, quarantine, "monsters/latest/monsters_quarantine.csv")
+    upload_blob(quarantine_local_file, quarantine, f"monsters/runs/run_id={run_id}/monsters_quarantine.csv")
+
+
+def run_all(df, run_id):
     quarantine_df, clean_df = transform_dataframe(df)
-    quarantine_df.show()
-    clean_df.show()
+    clean_local_file, quarantine_local_file = export_to_local(clean_df, quarantine_df, run_id)
+    upload_after_transform(clean_local_file, quarantine_local_file, run_id)
+
+
+if __name__ == "__main__":
+    run_all(df, run_id)
