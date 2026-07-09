@@ -1,10 +1,12 @@
 # src/azure_sql_loader.py
 
 import os
+from pathlib import Path
+
 import pandas as pd
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
-from dotenv import load_dotenv
 
 
 load_dotenv()
@@ -25,11 +27,19 @@ def get_azure_sql_engine():
         },
     )
 
+    print("SQL loader file:", __file__)
+
     return create_engine(connection_url, fast_executemany=True)
 
 
-def load_monsters_clean_to_sql(csv_path: str):
+def load_monsters_clean_to_sql(csv_path, run_id):
+    csv_path = Path(csv_path)
+
+    if not csv_path.exists():
+        raise FileNotFoundError(f"CSV not found: {csv_path}")
+
     df = pd.read_csv(csv_path)
+    df["run_id"] = run_id
 
     engine = get_azure_sql_engine()
 
@@ -38,7 +48,6 @@ def load_monsters_clean_to_sql(csv_path: str):
         con=engine,
         if_exists="append",
         index=False,
-        method=None,
     )
 
     print(f"Loaded {len(df)} rows into Azure SQL table: monsters_clean")

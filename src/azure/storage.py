@@ -4,6 +4,8 @@ from azure.storage.blob import BlobServiceClient, ContainerClient, BlobClient
 from azure.core.exceptions import AzureError
 import logging
 from pprint import pprint
+
+from sqlalchemy import text
 from src.config.settings import ACCOUNT_URL
 from src.azure.authentication import get_credential
 import inspect
@@ -11,7 +13,7 @@ from src.utils.object_explorer import build_azure_blob_storage_map, build_method
 from pathlib import Path
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (col, lit, lower, upper, trim, regexp_replace, when, coalesce, expr, initcap)
-
+from src.azure_sql_loader import get_azure_sql_engine, load_monsters_clean_to_sql
 
 credential = get_credential()
 blob_service: BlobServiceClient = BlobServiceClient(account_url=ACCOUNT_URL, credential=credential, )
@@ -139,6 +141,141 @@ reports = get_container("reports")
 #     print(f"Properties : {len(properties)}")
 #     print(f"Methods    : {len(methods)}")
 #     print("=" * 120)
+def damage_report(df):
+
+    row_count = df.count()
+
+    print("\n========== FINDINGS ==========")
+
+    # Duplicate monster IDs
+    if "Monster ID" in df.columns:
+        id_column = "Monster ID"
+    elif "monster_id" in df.columns:
+        id_column = "monster_id"
+    else:
+        id_column = None
+
+    if id_column:
+        distinct_id_count = df.select(id_column).distinct().count()
+        duplicate_id_count = row_count - distinct_id_count
+
+        if duplicate_id_count > 0:
+            print(f"WARNING: {duplicate_id_count} duplicate {id_column} values detected")
+        else:
+            print(f"OK: No duplicate {id_column} values detected")
+
+    # Nulls by column
+    for column_name in df.columns:
+        null_count = df.filter(col(column_name).isNull()).count()
+
+        if null_count > 0:
+            print(f"WARNING: {null_count} null values detected in {column_name}")
+
+    # Distinct info for watched columns
+    watch_columns = [
+        "Monster Type", "monster_type",
+        "Status", "status",
+        "Danger Level", "danger_level"
+    ]
+
+    for column_name in watch_columns:
+        if column_name in df.columns:
+            distinct_count = df.select(column_name).distinct().count()
+            print(f"INFO: {column_name} has {distinct_count} distinct values")
+
+    print("\n========== COLUMN PROFILE ==========")
+
+    rows = []
+
+    for column_name, data_type in df.dtypes:
+        row = {"column": column_name, "schema": data_type, "null_count": str(df.filter(col(column_name).isNull()).count()),
+               "blank_count": (str(df.filter(trim(col(column_name)) == "").count()) if data_type == "string" else "N/A"),
+               "distinct_count": str(df.select(column_name).distinct().count())}
+
+        rows.append(row)
+
+    columns = ["column", "schema", "null_count", "blank_count", "distinct_count"]
+
+    # calculate column widths
+    widths = {}
+    for column in columns:
+        widths[column] = max(len(column), max(len(str(row.get(column, ""))) for row in rows))
+
+    # print header
+    header = " | ".join(column.ljust(widths[column]) for column in columns)
+    divider = "-+-".join("-" * widths[column] for column in columns)
+
+    print(header)
+    print(divider)
+
+    # print rows
+    for row in rows:
+        line = " | ".join(str(row.get(column, "")).ljust(widths[column]) for column in columns)
+        print(line)
+    print("\n")
+
+
+pipeline_plan = [
+    ("normalize_headers", "all_columns"),
+    ("trim", "all_string_columns"),
+    ("blank_to_null", "all_string_columns"),
+
+    ("upper", ["monster_id"]),
+    ("initcap", ["monster_name"]),
+    ("lower", ["monster_type", "status"]),
+
+    ("preserve_original", ["created_date", "danger_level", "base_price"]),
+
+    ("clean_currency", ["base_price"]),
+    ("try_cast_double", ["base_price"]),
+
+    ("flag_negative", ["base_price"]),
+    ("fix_negative", ["base_price"]),
+
+    ("try_parse_date", ["created_date"]),
+    ("try_cast_int", ["danger_level"]),
+
+    ("range_check", ["danger_level"]),
+    ("null_check", ["monster_name", "created_date"]),
+]
+
+
+def before_transformations(df):
+    print("\n-------------------------------Before Transformations--------------------------------")
+    damage_report(df)
+    print("============================= Before Transformations =============================")
+    df.show(30)
+    print("\n========== Required Transformation Order ============================")
+    for step_num, (transform_name, columns) in enumerate(pipeline_plan, start=1):
+        print(f"{step_num:02d}. {transform_name:<20} {columns}")
+    print("=======================================================================")
+
+
+def after_transformations(df, clean_df, quarantine_df):
+    print("\n========== After Transformations ==========")
+    clean_df.show(30)
+    print("\n========== CLEAN / QUARANTINE SUMMARY ==================")
+    print(f"Total Rows: {df.count()}")
+    print(f"Clean Rows: {clean_df.count()}")
+    print(f"Quarantine Rows: {quarantine_df.count()}")
+    damage_report(clean_df)
+
+
+def pipeline_complete(clean_df, quarantine_df, run_id):
+    print("\n========== PIPELINE COMPLETE ==========")
+
+    print(f"Run ID: {run_id}")
+    print("--------------------------------")
+
+    print(f"{'Clean Rows':<22} {clean_df.count()}")
+    print(f"{'Quarantine Rows':<22} {quarantine_df.count()}")
+    print(f"{'Blob Upload':<22} SUCCESS")
+    print(f"{'After SQL Load':<22} SUCCESS")
+    print(f"{'Azure SQL Validation':<22} SUCCESS")
+
+    print("--------------------------------")
+    print("✓ MonsterForge ETL pipeline completed successfully")
+    return
 
 
 def upload_blob(local_file, container_client, blob_path):
@@ -150,7 +287,6 @@ def upload_blob(local_file, container_client, blob_path):
 
 
 def transform_dataframe(df):
-    df.show()
 
     for old_name in df.columns:
         new_name = old_name.lower().replace(" ", "_")
@@ -219,10 +355,54 @@ def upload_after_transform(clean_local_file, quarantine_local_file, run_id):
     upload_blob(quarantine_local_file, quarantine, f"monsters/runs/run_id={run_id}/monsters_quarantine.csv")
 
 
+def run_azure_sql_validation():
+    print("\n========== AZURE SQL VALIDATION ==========")
+
+    query = text("""
+        SELECT
+            COUNT(*) AS clean_rows,
+            COUNT(DISTINCT monster_type) AS monster_types,
+            COUNT(DISTINCT status) AS statuses,
+            ROUND(AVG(base_price), 2) AS average_price
+        FROM monsters_clean;
+    """)
+
+    engine = get_azure_sql_engine()
+
+    with engine.connect() as connection:
+        result = connection.execute(query)
+        row = result.fetchone()
+
+    if row is None:
+        print("No validation results returned.")
+        return
+
+    validation_results = {
+        "clean_rows": row.clean_rows,
+        "monster_types": row.monster_types,
+        "statuses": row.statuses,
+        "average_price": row.average_price,
+    }
+
+    print("\nValidation Results")
+    print("--------------------------------")
+
+    for key, value in validation_results.items():
+        print(f"{key:<18} {value}")
+
+    print("\n✓ Azure SQL validation completed")
+
+
 def run_all(df, run_id):
+    damage_report(df)
+    before_transformations(df)
     quarantine_df, clean_df = transform_dataframe(df)
     clean_local_file, quarantine_local_file = export_to_local(clean_df, quarantine_df, run_id)
+    after_transformations(df, clean_df, quarantine_df)
     upload_after_transform(clean_local_file, quarantine_local_file, run_id)
+    load_monsters_clean_to_sql(clean_local_file, run_id)
+    run_azure_sql_validation()
+    pipeline_complete(clean_df, quarantine_df, run_id)
 
 
 if __name__ == "__main__":
