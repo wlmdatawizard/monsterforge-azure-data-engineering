@@ -52,7 +52,6 @@ clean = get_container("clean")
 quarantine = get_container("quarantine")
 reports = get_container("reports")
 
-# raw_blob_client = get_blob_client(raw, blob)
 # def flatten_recursive_paths(data, path=""):
 #     result = {}
 
@@ -79,8 +78,6 @@ reports = get_container("reports")
 #                 result[current_path] = value
 
 #     return result
-
-
 # def explore1(obj):
 #     methods = []
 #     properties = []
@@ -141,6 +138,8 @@ reports = get_container("reports")
 #     print(f"Properties : {len(properties)}")
 #     print(f"Methods    : {len(methods)}")
 #     print("=" * 120)
+
+
 def damage_report(df):
 
     row_count = df.count()
@@ -355,7 +354,7 @@ def upload_after_transform(clean_local_file, quarantine_local_file, run_id):
     upload_blob(quarantine_local_file, quarantine, f"monsters/runs/run_id={run_id}/monsters_quarantine.csv")
 
 
-def run_azure_sql_validation():
+def run_azure_sql_validation(run_id):
     print("\n========== AZURE SQL VALIDATION ==========")
 
     query = text("""
@@ -364,13 +363,14 @@ def run_azure_sql_validation():
             COUNT(DISTINCT monster_type) AS monster_types,
             COUNT(DISTINCT status) AS statuses,
             ROUND(AVG(base_price), 2) AS average_price
-        FROM monsters_clean;
+        FROM monsters_clean
+        WHERE run_id = :run_id;
     """)
 
     engine = get_azure_sql_engine()
 
     with engine.connect() as connection:
-        result = connection.execute(query)
+        result = connection.execute(query, {"run_id": run_id})
         row = result.fetchone()
 
     if row is None:
@@ -401,7 +401,7 @@ def run_all(df, run_id):
     after_transformations(df, clean_df, quarantine_df)
     upload_after_transform(clean_local_file, quarantine_local_file, run_id)
     load_monsters_clean_to_sql(clean_local_file, run_id)
-    run_azure_sql_validation()
+    run_azure_sql_validation(run_id)
     pipeline_complete(clean_df, quarantine_df, run_id)
 
 
