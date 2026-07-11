@@ -4,11 +4,12 @@ from azure.storage.blob import BlobServiceClient, ContainerClient, BlobClient
 from azure.core.exceptions import AzureError
 import logging
 from pprint import pprint
-
 from sqlalchemy import text
+from sqlalchemy.exc import OperationalError
 from src.config.settings import ACCOUNT_URL
 from src.azure.authentication import get_credential
 import inspect
+import time
 from src.utils.object_explorer import build_azure_blob_storage_map, build_method_tree, build_object_map, explore, inspect_object, print_object, print_report, print_search_results, run_method_discovery, save_json, search_report, to_hierarchy
 from pathlib import Path
 from pyspark.sql import SparkSession
@@ -400,8 +401,8 @@ def run_all(df, run_id):
     clean_local_file, quarantine_local_file = export_to_local(clean_df, quarantine_df, run_id)
     after_transformations(df, clean_df, quarantine_df)
     upload_after_transform(clean_local_file, quarantine_local_file, run_id)
-    load_monsters_clean_to_sql(clean_local_file, run_id)
-    run_azure_sql_validation(run_id)
+    run_safely(load_monsters_clean_to_sql, clean_local_file, run_id, error_message="Failed to load monsters clean to SQL")
+    run_safely(run_azure_sql_validation, run_id, error_message="Failed to run Azure SQL validation")
     pipeline_complete(clean_df, quarantine_df, run_id)
 
 

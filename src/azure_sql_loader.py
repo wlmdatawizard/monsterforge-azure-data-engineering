@@ -1,12 +1,13 @@
 # src/azure_sql_loader.py
 
 import os
+import time
 from pathlib import Path
-
 import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
+from sqlalchemy.exc import OperationalError
 
 
 load_dotenv()
@@ -41,13 +42,27 @@ def load_monsters_clean_to_sql(csv_path, run_id):
     df = pd.read_csv(csv_path)
     df["run_id"] = run_id
 
-    engine = get_azure_sql_engine()
+    max_attempts = 3
 
-    df.to_sql(
-        name="monsters_clean",
-        con=engine,
-        if_exists="append",
-        index=False,
-    )
+    for attempt in range(1, max_attempts + 1):
+        engine = get_azure_sql_engine()
 
-    print(f"Loaded {len(df)} rows into Azure SQL table: monsters_clean")
+        try:
+            df.to_sql(name="monsters_clean", con=engine, if_exists="append", index=False, )
+            print(f"Loaded {len(df)} rows into Azure SQL table: " "monsters_clean")
+            return
+
+        except OperationalError:
+            if attempt == max_attempts:
+                raise
+
+            print(
+                f"Azure SQL connection timed out. "
+                f"Retrying in 10 seconds "
+                f"({attempt}/{max_attempts - 1})..."
+            )
+
+            time.sleep(10)
+
+        finally:
+            engine.dispose()
