@@ -18,7 +18,7 @@ from src.azure_sql_loader import get_azure_sql_engine, load_monsters_clean_to_sq
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s", )
 
-LOCAL_FILE = ("C:\\Users\\willi\\OneDrive\\Desktop\\monsterfroge-azure-data-engineering" "\\data\\raw\\MonsterForge_monsters_raw_100.csv")
+LOCAL_FILE = str(Path(__file__).resolve().parent / "data" / "raw" / "MonsterForge_monsters_raw_100.csv")
 
 
 def run_safely(func, *args, default_return=None, error_message="Operation failed", **kwargs, ):

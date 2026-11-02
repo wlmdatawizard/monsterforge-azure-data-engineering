@@ -19,7 +19,7 @@ from src.azure_sql_loader import get_azure_sql_engine, load_monsters_clean_to_sq
 credential = get_credential()
 blob_service: BlobServiceClient = BlobServiceClient(account_url=ACCOUNT_URL, credential=credential, )
 spark = (SparkSession.builder .appName("Azure Pipeline") .master("local[*]") .getOrCreate())
-local_file = "C:\\Users\\willi\\OneDrive\\Desktop\\monsterfroge-azure-data-engineering\\data\\raw\\MonsterForge_monsters_raw_100.csv"
+local_file = str(Path(__file__).resolve().parents[2] / "data" / "raw" / "MonsterForge_monsters_raw_100.csv")
 
 df = spark.read.csv(local_file, header=True, inferSchema=True)
 run_id = datetime.now().strftime("%Y%m%d_%H%M%S")

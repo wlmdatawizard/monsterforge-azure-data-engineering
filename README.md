@@ -49,6 +49,22 @@ The saved local output in `output/run_id=20260718_223746/` contains:
 
 These counts describe the checked-in local CSV artifacts. They are not evidence of the current state of Azure resources.
 
+## Screenshots
+
+These screenshots document the Azure setup during development.
+
+### Azure resource deployment
+
+![Azure portal showing the completed MonsterForge storage account deployment](notes/images/storage_account.png)
+
+*Completed deployment for the project's Azure Storage account in the `monsterforge-rg` resource group.*
+
+### Blob Storage containers
+
+![Azure Blob Storage container list showing clean, quarantine, raw, and reports containers](notes/images/containers.png)
+
+*Separate containers organize raw data, clean outputs, quarantined records, and reports. The current pipeline uploads processed CSVs to `clean` and `quarantine`; the other containers support the broader project structure.*
+
 ## Transformations and data quality
 
 The transformation function applies the following rules:
@@ -129,15 +145,9 @@ Give the signed-in identity Blob data access sufficient for uploads, such as Sto
 
 In `src/azure_sql_loader.py`, change the hard-coded SQL `host` and `database` in `get_azure_sql_engine()` to your own resources. SQL uses the username and password from `.env`; it does not use the Storage identity. Keep credentials out of source control; `.env` is ignored.
 
-### 3. Correct the input path
+### 3. Confirm the input file
 
-In `src/azure/storage.py`, replace the machine-specific `local_file` value with:
-
-```python
-local_file = str(Path.cwd() / "data" / "raw" / "MonsterForge_monsters_raw_100.csv")
-```
-
-The existing path contains `monsterfroge`, which differs from this repository's `monsterforge` folder name. The alternate script has the same issue in `LOCAL_FILE`.
+Both pipeline scripts resolve the input relative to their source file location. Keep the included CSV at `data/raw/MonsterForge_monsters_raw_100.csv`. No machine-specific input path is required.
 
 ### 4. Run the main pipeline
 
@@ -189,7 +199,7 @@ WHERE run_id = '<run_id>';
 
 This repository captures a working-development portfolio project with saved output artifacts. A fresh end-to-end cloud execution has not been verified as part of this documentation update.
 
-- **Reproducibility:** complete the dependency manifest and move input paths and SQL connection targets into configuration.
+- **Reproducibility:** complete the dependency manifest and move SQL connection targets into configuration.
 - **Failure reporting:** the main pipeline catches SQL errors but still prints a success summary. Check the actual error logs and validation results before treating a run as successful.
 - **Alternate runner:** `storage_with_run_safely.py` is experimental. Its checks treat `None` as failure even for successful functions that return `None`, including pandas CSV export and the current SQL loader.
 - **Duplicate handling:** the complete-row join uses ordinary equality, so rows containing nulls may not receive a duplicate flag. Add explicit ID and null-safe duplicate policies.
