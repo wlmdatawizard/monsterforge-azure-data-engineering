@@ -411,7 +411,6 @@ def run_azure_sql_validation(run_id):
 
     query = text("""
         SELECT
-            COUNT(*) AS clean_rows,
             COUNT(DISTINCT monster_type) AS monster_types,
             COUNT(DISTINCT status) AS statuses,
             ROUND(AVG(base_price), 2) AS average_price
@@ -442,7 +441,6 @@ def run_azure_sql_validation(run_id):
         return None
 
     validation_results = {
-        "clean_rows": row.clean_rows,
         "monster_types": row.monster_types,
         "statuses": row.statuses,
         "average_price": row.average_price,
@@ -460,11 +458,6 @@ def run_azure_sql_validation(run_id):
 
 
 def run_all(df, run_id, clean, quarantine):
-    run_safely(
-        damage_report,
-        df,
-        error_message="Initial damage report failed",
-    )
 
     run_safely(
         before_transformations,

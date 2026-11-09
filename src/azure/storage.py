@@ -1,4 +1,8 @@
+from contextlib import redirect_stdout
 from datetime import datetime
+from io import StringIO
+from itertools import zip_longest
+from shutil import get_terminal_size
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient, ContainerClient, BlobClient
 from azure.core.exceptions import AzureError
@@ -141,6 +145,9 @@ reports = get_container("reports")
 #     print("=" * 120)
 
 
+COLUMN_PROFILE_HEADING = "========== COLUMN PROFILE =========="
+
+
 def damage_report(df):
 
     row_count = df.count()
@@ -183,7 +190,7 @@ def damage_report(df):
             distinct_count = df.select(column_name).distinct().count()
             print(f"INFO: {column_name} has {distinct_count} distinct values")
 
-    print("\n========== COLUMN PROFILE ==========")
+    print(f"\n{COLUMN_PROFILE_HEADING}")
 
     rows = []
 
@@ -241,24 +248,50 @@ pipeline_plan = [
 
 
 def before_transformations(df):
-    print("\n-------------------------------Before Transformations--------------------------------")
-    damage_report(df)
-    print("============================= Before Transformations =============================")
-    df.show(30)
-    print("\n========== Required Transformation Order ============================")
-    for step_num, (transform_name, columns) in enumerate(pipeline_plan, start=1):
-        print(f"{step_num:02d}. {transform_name:<20} {columns}")
-    print("=======================================================================")
+    with redirect_stdout(StringIO()) as preview:
+        print("========== Before Transformations ==========")
+        df.show(30)
+
+    with redirect_stdout(StringIO()) as details:
+        damage_report(df)
+        print("========== Required Transformation Order ==========")
+        for step_num, (transform_name, columns) in enumerate(pipeline_plan, start=1):
+            print(f"{step_num:02d}. {transform_name:<20} {columns}")
+
+    print_report_columns(preview.getvalue(), details.getvalue())
+
+
+def print_report_columns(left_text, right_text):
+    left_lines = left_text.strip().splitlines()
+    right_lines = right_text.strip().splitlines()
+    separator = "  |  "
+    left_width = max(map(len, left_lines))
+    right_width = max(map(len, right_lines))
+
+    print()
+    if left_width + len(separator) + right_width >= get_terminal_size().columns:
+        print("\n".join(left_lines))
+        print()
+        print("\n".join(right_lines))
+        return
+
+    for left, right in zip_longest(left_lines, right_lines, fillvalue=""):
+        print(f"{left:<{left_width}}{separator}{right}".rstrip())
 
 
 def after_transformations(df, clean_df, quarantine_df):
     print("\n========== After Transformations ==========")
     clean_df.show(30)
-    print("\n========== CLEAN / QUARANTINE SUMMARY ==================")
-    print(f"Total Rows: {df.count()}")
-    print(f"Clean Rows: {clean_df.count()}")
-    print(f"Quarantine Rows: {quarantine_df.count()}")
-    damage_report(clean_df)
+
+    with redirect_stdout(StringIO()) as details:
+        print("========== CLEAN / QUARANTINE SUMMARY ==================")
+        print(f"Total Rows: {df.count()}")
+        print(f"Clean Rows: {clean_df.count()}")
+        print(f"Quarantine Rows: {quarantine_df.count()}")
+        damage_report(clean_df)
+
+    summary_and_findings, heading, profile = details.getvalue().partition(COLUMN_PROFILE_HEADING)
+    print_report_columns(summary_and_findings, heading + profile)
 
 
 def pipeline_complete(clean_df, quarantine_df, run_id):
@@ -360,7 +393,6 @@ def run_azure_sql_validation(run_id):
 
     query = text("""
         SELECT
-            COUNT(*) AS clean_rows,
             COUNT(DISTINCT monster_type) AS monster_types,
             COUNT(DISTINCT status) AS statuses,
             ROUND(AVG(base_price), 2) AS average_price
@@ -370,16 +402,18 @@ def run_azure_sql_validation(run_id):
 
     engine = get_azure_sql_engine()
 
-    with engine.connect() as connection:
-        result = connection.execute(query, {"run_id": run_id})
-        row = result.fetchone()
+    try:
+        with engine.connect() as connection:
+            result = connection.execute(query, {"run_id": run_id})
+            row = result.fetchone()
+    finally:
+        engine.dispose()
 
     if row is None:
         print("No validation results returned.")
         return
 
     validation_results = {
-        "clean_rows": row.clean_rows,
         "monster_types": row.monster_types,
         "statuses": row.statuses,
         "average_price": row.average_price,
@@ -395,16 +429,28 @@ def run_azure_sql_validation(run_id):
 
 
 def run_all(df, run_id):
-    damage_report(df)
     before_transformations(df)
     quarantine_df, clean_df = transform_dataframe(df)
     clean_local_file, quarantine_local_file = export_to_local(clean_df, quarantine_df, run_id)
     after_transformations(df, clean_df, quarantine_df)
+    print()
     upload_after_transform(clean_local_file, quarantine_local_file, run_id)
     run_safely(load_monsters_clean_to_sql, clean_local_file, run_id, error_message="Failed to load monsters clean to SQL")
-    run_safely(run_azure_sql_validation, run_id, error_message="Failed to run Azure SQL validation")
-    pipeline_complete(clean_df, quarantine_df, run_id)
+    with redirect_stdout(StringIO()) as validation:
+        run_safely(run_azure_sql_validation, run_id, error_message="Failed to run Azure SQL validation")
+    with redirect_stdout(StringIO()) as summary:
+        pipeline_complete(clean_df, quarantine_df, run_id)
+
+    print_report_columns(validation.getvalue(), summary.getvalue())
 
 
 if __name__ == "__main__":
-    run_all(df, run_id)
+    try:
+        run_all(df, run_id)
+    finally:
+        try:
+            blob_service.close()
+        finally:
+            credential.close()
+        print()
+        print("Azure Blob Storage client closed and Azure SQL connections released.")

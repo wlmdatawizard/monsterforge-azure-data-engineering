@@ -18,7 +18,7 @@ def get_azure_sql_engine():
         "mssql+pyodbc",
         username=os.getenv("AZURE_SQL_USER"),
         password=os.getenv("AZURE_SQL_PASSWORD"),
-        host="monsterforge-sql-wlm.database.windows.net",
+        host="monsterforge-sql-wlm-centralus.database.windows.net",
         port=1433,
         database="monsterforge",
         query={
@@ -27,8 +27,6 @@ def get_azure_sql_engine():
             "TrustServerCertificate": "no",
         },
     )
-
-    print("SQL loader file:", __file__)
 
     return create_engine(connection_url, fast_executemany=True)
 

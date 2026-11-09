@@ -33,13 +33,13 @@ The SQL loader reads the exported clean CSV through pandas. Blob outputs include
 | SQLAlchemy and pyodbc | SQL connection, insertion, and validation |
 | python-dotenv | Local environment configuration |
 
-## Dataset and saved results
+## Dataset and run results
 
 The included file, `data/raw/MonsterForge_monsters_raw_100.csv`, contains **105 records**, despite the `100` in its filename. Its seven input fields are monster ID, name, type, danger level, created date, base price, and status.
 
 The data includes inconsistent capitalization, whitespace, currency formatting, mixed date formats, missing values, and duplicate records.
 
-The saved local output in `output/run_id=20260718_223746/` contains:
+The November 7, 2026 run (`20261107_042926`) processed the dataset and produced these results:
 
 | Output | Rows |
 | --- | ---: |
@@ -47,11 +47,29 @@ The saved local output in `output/run_id=20260718_223746/` contains:
 | Quarantined records | 21 |
 | Total | 105 |
 
-These counts describe the checked-in local CSV artifacts. They are not evidence of the current state of Azure resources.
+The pipeline saved both CSVs in `output/run_id=20261107_042926/` and uploaded a latest copy and a run-specific copy of each to Blob Storage. It loaded all 84 clean records into Azure SQL. The validation query for this run returned 6 monster types, 4 statuses, and an average base price of 7,712.86.
 
 ## Screenshots
 
-These screenshots document the Azure setup during development.
+The first three screenshots show the terminal output from the November 7 pipeline run. The Azure portal screenshots below them show the original infrastructure setup.
+
+### Before transformations
+
+![Raw CSV preview alongside findings, column profile, and transformation order](notes/images/before-transformations.png)
+
+The raw profile flags five duplicate monster IDs and five missing monster names. The preview shows inconsistent dates, currency formats, and capitalization.
+
+### After transformations
+
+![Cleaned records and column profile with 84 clean and 21 quarantined rows](notes/images/after_transformations.png)
+
+The cleaned preview shows normalized values and preserved source fields. Of the 105 input records, 84 passed the cleaning rules and 21 were quarantined.
+
+### Azure uploads and SQL validation
+
+![Four successful Blob uploads, 84 rows loaded into Azure SQL, and validation results for run 20261107_042926](notes/images/azure_pipeline_results.png)
+
+The terminal confirms all four Blob uploads, the SQL load, and the validation query for run `20261107_042926`.
 
 ### Azure resource deployment
 
@@ -107,6 +125,10 @@ monsterforge-azure-data-engineering/
 ```
 
 The `configs`, `docs`, `scripts`, `tests`, and `src/etl` directories currently serve as placeholders.
+
+## Recreate Azure infrastructure
+
+The [Bicep deployment guide](infra/README.md) recreates the resource group, storage containers, Blob access role, SQL free-tier database, and client SQL firewall rule. Its PowerShell helper previews changes by default; an explicit `-Deploy` switch creates resources. An active subscription is required. The deployed project uses Blob Storage in East US and Azure SQL in Central US.
 
 ## Setup
 
@@ -183,7 +205,7 @@ quarantine/
 
 The loader appends clean rows to `monsters_clean`, adding `run_id` to each row. It retries SQL `OperationalError` failures up to three total attempts, with a ten-second delay between attempts.
 
-The validation step calculates clean row count, distinct monster types, distinct statuses, and average price for the current run. To inspect a run manually:
+The terminal validation report shows distinct monster types, distinct statuses, and average price for the current run. The manual query below also includes a row count:
 
 ```sql
 SELECT
@@ -196,8 +218,6 @@ WHERE run_id = '<run_id>';
 ```
 
 ## Current limitations and next steps
-
-This repository captures a working-development portfolio project with saved output artifacts. A fresh end-to-end cloud execution has not been verified as part of this documentation update.
 
 - **Reproducibility:** complete the dependency manifest and move SQL connection targets into configuration.
 - **Failure reporting:** the main pipeline catches SQL errors but still prints a success summary. Check the actual error logs and validation results before treating a run as successful.
